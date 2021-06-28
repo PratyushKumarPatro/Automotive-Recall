@@ -112,7 +112,7 @@ struct DefectComplaintRequestdetails{
     string VIN;
     string VehicleModelName;
     string FunctionalModuleName;
-    string BuildYear;
+    string VehicleBuildYear;
     
     status DefectComplaintRequestdetailsStatus;
     
@@ -156,14 +156,14 @@ modifier onlyReceiver1{
 event DefectComplaintPlaced(bytes32 DefectComplaintRequestID, address receiver, address requestor, string VIN, string FunctionalModuleName, string VehicleModelname, string BuildDate);
 event StatusUpdated(bytes32 DefectComplaintRequestID, status newStatus);
 
-function PlaceDefectComplaint(address receiver, string memory VIN, string memory FunctionalModuleName, string memory VehicleModelName, string memory BuildYear) public onlyRequestor{
+function PlaceDefectComplaint(address receiver, string memory VIN, string memory FunctionalModuleName, string memory VehicleModelName, string memory VehicleBuildYear) public onlyRequestor{
     require(RegistrationContract.isNHTSA(receiver),
     "NHTSA's address is not valid.");
     InitTime=16;
-    bytes32 temp=keccak256(abi.encodePacked(msg.sender,now,address(this),VIN, VehicleModelName, FunctionalModuleName, BuildYear));
-    GetDefectComplaintRequestID[temp]=DefectComplaintRequestdetails(receiver, msg.sender, VIN,VehicleModelName,FunctionalModuleName, BuildYear,status.Pending);
+    bytes32 temp=keccak256(abi.encodePacked(msg.sender,now,address(this),VIN, VehicleModelName, FunctionalModuleName, VehicleBuildYear));
+    GetDefectComplaintRequestID[temp]=DefectComplaintRequestdetails(receiver, msg.sender, VIN,VehicleModelName,FunctionalModuleName, VehicleBuildYear,status.Pending);
     
-    emit DefectComplaintPlaced (temp, receiver, msg.sender, VIN, VehicleModelName,FunctionalModuleName, BuildYear);
+    emit DefectComplaintPlaced (temp, receiver, msg.sender, VIN, VehicleModelName,FunctionalModuleName, VehicleBuildYear);
 }
 
 function ConfirmDefectRequest(bytes32 DefectComplaintRequestID, bool accepted) public onlyReceiver{
