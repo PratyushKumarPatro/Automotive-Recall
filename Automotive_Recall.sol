@@ -570,7 +570,7 @@ function PlacePurchaseOrder(address receiver, string memory Partnumber, uint req
     }
     
 
-function ConfirmOrder(bytes32 PurchaseOrderID,address Receiver2, uint quantitytoship, bool accepted) public onlyRequestor2{
+function ConfirmPurchaseOrder(bytes32 PurchaseOrderID,address Receiver2, uint quantitytoship, bool accepted) public onlyRequestor2{
     require(Availableinventory>=quantitytoship,
     "Not enough stock available"
     );
